@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    aws:
+      credentials:
+        # can also be skipped with code validation
+        access-key: test
+        secret-key: test
+      sqs:
+        endpoint: https://s3.localhost.localstack.cloud:4566/
