@@ -1,10 +1,11 @@
-package com.mnp.implawssqssns.service;
+package com.mnp.implawssqssns.service.sqs;
 
 import io.awspring.cloud.sqs.operations.MessagingOperationFailedException;
 import io.awspring.cloud.sqs.operations.SendResult;
 import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -14,13 +15,16 @@ public class SqsMessageSendingService {
 
     private static final Logger LOG = LoggerFactory.getLogger(SqsMessageSendingService.class);
 
+    private final String queueName;
+
     private final SqsTemplate sqsTemplate;
 
-    public SqsMessageSendingService(final SqsTemplate sqsTemplate) {
+    public SqsMessageSendingService(final SqsTemplate sqsTemplate, @Value("${queue.name}") final String queueName) {
         this.sqsTemplate = sqsTemplate;
+        this.queueName = queueName;
     }
 
-    public void sendMessage(String queueName, String message) {
+    public void sendMessage(String message) {
 
         try
         {
